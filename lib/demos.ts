@@ -9,6 +9,11 @@ export const demos: { name: string; items: Item[] }[] = [
     name: 'Layouts',
     items: [
       {
+        name: 'Wallet',
+        slug: 'wallet',
+        description: 'Manage User Wallet',
+      },
+      {
         name: 'Nested Layouts',
         slug: 'layouts',
         description: 'Create UI that is shared across routes',

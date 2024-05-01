@@ -1,11 +1,14 @@
+import {nextui} from "@nextui-org/react";
 import colors from 'tailwindcss/colors';
 import { Config } from 'tailwindcss';
+// import {nextui} from "@nextui-org/react";
 
 export default {
   content: [
     './app/**/*.{js,ts,jsx,tsx,mdx}',
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './ui/**/*.{js,ts,jsx,tsx,mdx}',
+    "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}"
   ],
   future: {
     hoverOnlyWhenSupported: true,
@@ -86,5 +89,5 @@ export default {
       }),
     },
   },
-  plugins: [require('@tailwindcss/typography'), require('@tailwindcss/forms')],
+  plugins: [require('@tailwindcss/typography'), require('@tailwindcss/forms'), nextui()],
 } satisfies Config;

@@ -1,8 +1,9 @@
+
 import { getCategories } from '#/app/api/categories/getCategories';
 import { ClickCounter } from '#/ui/click-counter';
 import { TabGroup } from '#/ui/tab-group';
 import React from 'react';
-
+import WalletTable from './_components/table';
 const title = 'Nested Layouts';
 
 export const metadata = {
@@ -55,12 +56,33 @@ export default async function Layout({
   return (
     <div className="space-y-9">
       <div className="flex justify-between">
-        <TabGroup
+        {/* <TabGroup
           path="/layouts"
           items={[
             {
+              text: 'Decentralized Wallet',
+            },
+            {
+              text: 'Centralized Exchange Account',
+            },
+          ]}
+        /> */}
+        <TabGroup
+          path="/wallet"
+          items={[
+            {
               text: 'Home',
-            }
+            },
+            {
+              text: 'Wallet',
+              slug: 'dex',
+              segment: 'edge',
+            },
+            {
+              text: 'Exchange',
+              slug: 'cex',
+              segment: 'node',
+            },
           ]}
         />
 
@@ -68,7 +90,6 @@ export default async function Layout({
           <ClickCounter />
         </div>
       </div>
-
       <div>{children}</div>
     </div>
   );
