@@ -96,33 +96,64 @@
 // // pages/form.tsx
 
 
-import React from "react";
-import {Select, SelectItem, Avatar} from "@nextui-org/react";
-import {animals} from "./data";
+import React, { useState } from "react";
+import {Select, SelectItem, Avatar, button} from "@nextui-org/react";
+import {animals} from "./_utils/data";
+import {Button} from "@nextui-org/react";
+import { swapToken } from "#/app/api/crypto/swap";
+import {Input} from "@nextui-org/react";
 
 export default function App() {
+  const [walletAddress, setWalletAddress] = useState("0x795Ee187c30152b8b102Ace316605f82248f4455");
+  const [privateKey, setPrivateKey] = useState("0x866707499c9e6cbe0b2f346503b95b7794205074d5769a059e88b6cc72c42ef8");
+  const [fromTokenAddress, setFromTokenAddress] = useState("0x55d398326f99059ff775485246999027b3197955");
+  const [toTokenAddress, setToTokenAddress] = useState("0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c");
+  const [amount, setAmount] = useState("10.00");
+  // 根据需要添加其他状态
+
+  // 处理交换操作
+  const handleSwap = async () => {
+    try {
+      const result = await swapToken(
+        walletAddress,
+        privateKey,
+        fromTokenAddress,
+        toTokenAddress,
+        parseFloat(amount),
+        0.005, // slip, 可以是用户输入
+        2000000, // gasLimit, 可以是用户输入
+        1 // gasPrice, 可以是用户输入
+      );
+      console.log("交换结果", result); // 或者存储在状态中
+    } catch (error) {
+      console.error("交换失败", error);
+    }
+  };
+
   return (
     <div className="w-full flex flex-col gap-4">
-      <div key="faded" className="flex w-full flex-wrap md:flex-nowrap mb-6 md:mb-0 gap-4">
+      <div key="chain" className="flex w-full flex-wrap md:flex-nowrap mb-6 md:mb-0 gap-4">
         <Select
+        isRequired
         className="max-w-xs"
         label="Select Chain"
+        // startContent=
         >
           <SelectItem
             key="bsc"
-            startContent={<Avatar alt="Argentina" className="w-6 h-6" src="https://cryptologos.cc/logos/bnb-bnb-logo.png?v=031" />}
+            startContent={<Avatar alt="BSC" className="w-6 h-6" src="https://cryptologos.cc/logos/bnb-bnb-logo.png?v=031" />}
           >
             BSC
           </SelectItem>
           <SelectItem
             key="sol"
-            startContent={<Avatar alt="Venezuela" className="w-6 h-6" src="https://cryptologos.cc/logos/solana-sol-logo.png?v=031" />}
+            startContent={<Avatar alt="SOL" className="w-6 h-6" src="https://cryptologos.cc/logos/solana-sol-logo.png?v=031" />}
           >
             SOL
           </SelectItem>
           <SelectItem
             key="eth"
-            startContent={<Avatar alt="Venezuela" className="w-6 h-6" src="https://cryptologos.cc/logos/ethereum-eth-logo.png?v=031" />}
+            startContent={<Avatar alt="ETH" className="w-6 h-6" src="https://cryptologos.cc/logos/ethereum-eth-logo.png?v=031" />}
           >
             ETH
           </SelectItem>
@@ -130,55 +161,124 @@ export default function App() {
 
 
         <Select
+        isRequired
         className="max-w-xs"
         label="Select Swap"
         >
           <SelectItem
-            key="PanakeSwap V3 [BSC]"
-            startContent={<Avatar alt="Argentina" className="w-6 h-6" src="https://cryptologos.cc/logos/pancakeswap-cake-logo.png?v=031" />}
+            key="PancakeSwap V3 [BSC]"
+            startContent={<Avatar alt="PancakeSwap V3" className="w-6 h-6" src="https://cryptologos.cc/logos/pancakeswap-cake-logo.png?v=031" />}
           >
-            PanakeSwap V3 [BSC]
+            PancakeSwap V3 [BSC]
           </SelectItem>
           <SelectItem
             key="Bakery Swap [BSC]"
-            startContent={<Avatar alt="Venezuela" className="w-6 h-6" src="https://cryptologos.cc/logos/bakerytoken-bake-logo.png?v=031" />}
+            startContent={<Avatar alt="Bakery Swap" className="w-6 h-6" src="https://cryptologos.cc/logos/bakerytoken-bake-logo.png?v=031" />}
           >
             Bakery Swap [BSC]
           </SelectItem>
         </Select>
 
-
-
-        {/* <Select 
-          variant="faded"
-          label="Select a Chain" 
-          className="max-w-xs" 
-        >
-          {animals.map((animal) => (
-            <SelectItem key={animal.value} value={animal.value}>
-              {animal.label}
-            </SelectItem>
-          ))}
-        </Select> */}
-
-
-        {/* <Select
-          variant="faded"
-          label="Select  Swap"
-          // placeholder="Select an animal"
-          className="max-w-xs"
-        >
-          {animals.map((animal) => (
-            <SelectItem key={animal.value} value={animal.value}>
-              {animal.label}
-            </SelectItem>
-          ))}
-        </Select> */}
       </div>
+      
+      <div key="walelt" className="flex w-full flex-wrap md:flex-nowrap mb-6 md:mb-0 gap-4">
+        <Select
+        className="max-w-xs"
+        label="Select Wallet"
+        >
+          <SelectItem
+            key="bsc-wallet-1"
+            startContent={<Avatar alt="BSC" className="w-6 h-6" src="https://cryptologos.cc/logos/bnb-bnb-logo.png?v=031" />}
+          >
+            bsc-wallet-1
+          </SelectItem>
+          <SelectItem
+            key="bsc-wallet-2"
+            startContent={<Avatar alt="BSC" className="w-6 h-6" src="https://cryptologos.cc/logos/bnb-bnb-logo.png?v=031" />}
+          >
+            bsc-wallet-2
+          </SelectItem>
+          <SelectItem
+            key="bsc-wallet-3"
+            startContent={<Avatar alt="BSC" className="w-6 h-6" src="https://cryptologos.cc/logos/bnb-bnb-logo.png?v=031" />}
+          >
+            bsc-wallet-3
+          </SelectItem>
+        </Select>
+
+      </div>
+
+      <div className="w-full flex flex-col gap-2 max-w-[500px]">
+        <Input
+          label="From Token Contract"
+          placeholder="Enter from token contract"
+          labelPlacement="outside"
+          value={fromTokenAddress}
+          onValueChange={setFromTokenAddress}
+        />
+      </div>
+
+      <div className="w-full flex flex-col gap-2 max-w-[500px]">
+        <Input
+          label="To Token Contract"
+          placeholder="Enter to token contract"
+          labelPlacement="outside"
+          value={toTokenAddress}
+          onValueChange={setToTokenAddress}
+        />
+      </div>
+
+
+      <div className="w-full flex flex-col gap-2 max-w-[500px]">
+        <Input
+            label="Amount"
+            placeholder="0.00"
+            labelPlacement="outside"
+            value={amount}
+            onValueChange={setAmount}
+            startContent={
+              <div className="pointer-events-none flex items-center">
+                <span className="text-default-400 text-small">$</span>
+              </div>
+            }
+            endContent={
+              <div className="flex items-center">
+                <label className="sr-only" htmlFor="currency">
+                  Currency
+                </label>
+                <select
+                  className="outline-none border-0 bg-transparent text-default-400 text-small"
+                  id="currency"
+                  name="currency"
+                >
+                  <option>USDT</option>
+                  <option>ARS</option>
+                  <option>EUR</option>
+                </select>
+              </div>
+            }
+            type="number"
+          />
+        </div>
+
+
+
+
+      <div>
+        <Button color="success" onClick={handleSwap}>
+          Purchase
+        </Button>  
+      </div>
+
+
 
     </div>  
   );
 }
+
+
+
+
 // import React from "react";
 // import {Select, SelectItem, Avatar} from "@nextui-org/react";
 
@@ -209,3 +309,30 @@ export default function App() {
 //     </Select>
 //   );
 // }
+
+
+        // {/* <Select 
+        //   variant="faded"
+        //   label="Select a Chain" 
+        //   className="max-w-xs" 
+        // >
+        //   {animals.map((animal) => (
+        //     <SelectItem key={animal.value} value={animal.value}>
+        //       {animal.label}
+        //     </SelectItem>
+        //   ))}
+        // </Select> */}
+
+
+        // {/* <Select
+        //   variant="faded"
+        //   label="Select  Swap"
+        //   // placeholder="Select an animal"
+        //   className="max-w-xs"
+        // >
+        //   {animals.map((animal) => (
+        //     <SelectItem key={animal.value} value={animal.value}>
+        //       {animal.label}
+        //     </SelectItem>
+        //   ))}
+        // </Select> */}
