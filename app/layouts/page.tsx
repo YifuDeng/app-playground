@@ -105,7 +105,7 @@ import {Input} from "@nextui-org/react";
 
 export default function App() {
   const [walletAddress, setWalletAddress] = useState("0x795Ee187c30152b8b102Ace316605f82248f4455");
-  const [privateKey, setPrivateKey] = useState("0x866707499c9e6cbe0b2f346503b95b7794205074d5769a059e88b6cc72c42ef8");
+  const [privateKey, setPrivateKey] = useState("");
   const [fromTokenAddress, setFromTokenAddress] = useState("0x55d398326f99059ff775485246999027b3197955");
   const [toTokenAddress, setToTokenAddress] = useState("0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c");
   const [amount, setAmount] = useState("10.00");
